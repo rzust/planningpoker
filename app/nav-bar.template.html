@@ -1,10 +1,10 @@
-<nav class="blue" ng-hide="$ctrl.hidden">
+<nav class="blue" ng-if="$root.currentUser">
   <div class="nav-wrapper">
     <a href="#!/dashboard" class="brand-logo">D-Labs Planning Poker</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a href="#!/dashboard">Join sessions</a></li>
       <li><a href="#!/my_sessions">My sessions</a></li>
-      <li><a href="">Log out</a></li>
+      <li><a href ng-click="$ctrl.logoutUser()">Log out</a></li>
     </ul>
   </div>
 </nav>

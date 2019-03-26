@@ -1,3 +1,4 @@
 angular.module('planningPoker', [
-  'ngRoute'
+  'ngRoute',
+  'ngCookies'
 ]);

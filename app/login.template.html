@@ -1,5 +1,7 @@
 <div class="login-box">
-  <h1>D-Labs Planning Poker</h1>
-  <input type="text" placeholder="username" />
-  <button class="btn btn-block blue">Login</button>
+  <form name="loginForm" class="my-form" ng-submit="$ctrl.loginUser()">
+    <h1>D-Labs Planning Poker</h1>
+    <input type="text" name="username" placeholder="username" ng-model="$ctrl.username" required />
+    <button class="btn btn-block blue" type="submit">Login</button>
+  </form>
 </div>
