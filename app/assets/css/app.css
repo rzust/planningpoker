@@ -23,6 +23,7 @@ nav .brand-logo {
 
 .main {
   min-height: 100vh;
+  margin-top: -64px;
 }
 
 .flex-container {
@@ -30,6 +31,8 @@ nav .brand-logo {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  flex-direction: column;
+  padding-top: 64px;
 }
 
 .login-box {

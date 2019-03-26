@@ -10,6 +10,7 @@
     "angular": "1.7.x",
     "angular-cookies": "1.7.x",
     "angular-route": "1.7.x",
+    "angular-socket-io": "^0.7.0",
     "materialize-css": "^1.0.0-rc.2"
   },
   "devDependencies": {

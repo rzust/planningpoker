@@ -1,4 +1,5 @@
 angular.module('planningPoker', [
   'ngRoute',
-  'ngCookies'
+  'ngCookies',
+  'btford.socket-io'
 ]);

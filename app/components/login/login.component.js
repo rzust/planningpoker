@@ -12,6 +12,6 @@ var LoginController = ['AuthService',
 ]
 
 angular.module('planningPoker').component('login', {
-  templateUrl: 'app/login.template.html',
+  templateUrl: 'app/components/login/login.template.html',
   controller: LoginController
 });
