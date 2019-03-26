@@ -22,7 +22,15 @@ angular.module('planningPoker').
           }
         }).
         when('/my_sessions', {
-          template: '',
+          template: '<my-sessions class="flex-container"></my-sessions>',
+          resolve: {
+            auth: ['AuthService', function (AuthService) {
+              return AuthService.validateUser();
+            }]
+          }
+        }).
+        when('/my_sessions/create', {
+          template: '<session-form class="flex-container"></session-form>',
           resolve: {
             auth: ['AuthService', function (AuthService) {
               return AuthService.validateUser();

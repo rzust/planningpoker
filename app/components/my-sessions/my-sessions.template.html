@@ -1,21 +1,21 @@
 <div class="container">
   <div ng-show="results.length > 0">
-    <h1>Available sessions to join</h1>
+    <h1>My sessions</h1>
     <table>
       <tbody>
         <tr
-          ng-repeat="session in $ctrl.sessions | filter:{ created_by: '!' + $root.currentUser.name } as results track by session.name">
+          ng-repeat="session in $ctrl.sessions | filter:{ created_by: $root.currentUser.name } as results track by session.name">
           <td>
             <a href="#!/session/{{$index}}">{{session.name}}</a>
           </td>
           <td>{{session.scale.name}}</td>
-          <td>moderated by {{session.created_by}}</td>
+          <td>{{session.state}}</td>
         </tr>
       </tbody>
     </table>
   </div>
   <div ng-show="results.length < 1" class="center">
-    <h1>Huh, no sessions available. Create one?</h1>
+    <h1>You don't have any sessions yet. Create one now?</h1>
     <a href="#!/my_sessions/create" class="btn">Create session</a>
   </div>
 </div>

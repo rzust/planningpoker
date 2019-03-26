@@ -11,7 +11,8 @@
     "angular-cookies": "1.7.x",
     "angular-route": "1.7.x",
     "angular-socket-io": "^0.7.0",
-    "materialize-css": "^1.0.0-rc.2"
+    "materialize-css": "^1.0.0-rc.2",
+    "ngstorage": "^0.3.11"
   },
   "devDependencies": {
     "cpx": "^1.5.0",
@@ -19,7 +20,7 @@
   },
   "scripts": {
     "postinstall": "npm run copy-libs",
-    "copy-libs": "cpx \"./node_modules/{angular,angular-*,materialize-css}/**/*\" ./app/lib -C",
+    "copy-libs": "cpx \"./node_modules/{angular,angular-*,materialize-css,ngstorage}/**/*\" ./app/lib -C",
     "start": "http-server -a localhost -p 4444 -c-1 ./"
   }
 }

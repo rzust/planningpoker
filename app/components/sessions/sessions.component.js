@@ -1,8 +1,9 @@
 var SessionsController = [
-  'Socket',
-  function (Socket) {
+  'SessionService',
+  function (SessionService) {
     var self = this;
 
+    self.sessions = SessionService.getAll()
   }
 ]
 

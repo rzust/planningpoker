@@ -1,0 +1,16 @@
+<div class="row container">
+  <form class="col s12" name="sessionForm" ng-submit="$ctrl.saveSession()">
+    <div class="row">
+      <div class="input-field col s6">
+        <input type="text" name="name" placeholder="session name" ng-model="$ctrl.session.name" />
+      </div>
+      <div class="input-field col s6">
+        <select class="browser-default" ng-options="scale as scale.name for scale in $ctrl.scales track by scale.name"
+          ng-model="$ctrl.session.scale"></select>
+      </div>
+    </div>
+    <div class="center">
+      <button type="submit" class="btn">Start</button>
+    </div>
+  </form>
+</div>
