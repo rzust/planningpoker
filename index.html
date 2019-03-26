@@ -2,7 +2,13 @@
 <html ng-app="planningPoker">
 
 <head>
-  <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css"
+    media="screen,projection" />
+  <link rel="stylesheet" href="app/app.css">
+
   <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
   <script src="node_modules/angular/angular.min.js"></script>
   <script src="node_modules/angular-route/angular-route.min.js"></script>
@@ -10,12 +16,13 @@
   <script src="app/app.module.js"></script>
   <script src="app/app.config.js"></script>
   <script src="app/nav-bar.component.js"></script>
+  <script src="app/login.component.js"></script>
 
 </head>
 
 <body>
   <nav-bar></nav-bar>
-  <div ng-view></div>
+  <div ng-view class="main"></div>
 </body>
 
 </html>

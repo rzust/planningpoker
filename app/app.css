@@ -1,0 +1,38 @@
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 2.6rem;
+}
+
+nav .brand-logo {
+  padding: 0 1rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.main {
+  min-height: 100vh;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-box {
+  padding: 1rem 2rem;
+  min-width: 300px;
+  max-width: 500px;
+}

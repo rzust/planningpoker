@@ -3,7 +3,7 @@ angular.module('planningPoker').
     function config($routeProvider) {
       $routeProvider.
         when('/', {
-          template: '<login></login>'
+          template: '<login class="flex-container"></login>'
         }).
         when('/dashboard', {
           template: ''
