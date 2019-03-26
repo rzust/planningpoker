@@ -1,0 +1,14 @@
+{
+  "name": "planning-poker",
+  "version": "1.0.0",
+  "description": "agile estimator",
+  "main": "app.module.js",
+  "repository": "https://github.com/renatozust/planning-poker",
+  "author": "Renato <renatozust@mail.ru>",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.7.x",
+    "angular-route": "1.7.x",
+    "materialize-css": "^1.0.0-rc.2"
+  }
+}
