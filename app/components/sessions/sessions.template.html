@@ -4,7 +4,7 @@
     <table>
       <tbody>
         <tr
-          ng-repeat="session in $ctrl.sessions | filter:{ created_by: '!' + $root.currentUser.name } as results track by session.name">
+          ng-repeat="session in $ctrl.sessions | filter:{ created_by: '!' + $root.currentUser.name, state: 'Draft' } as results track by session.name">
           <td>
             <a href="#!/session/{{$index}}">{{session.name}}</a>
           </td>

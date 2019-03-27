@@ -1,14 +1,46 @@
 {
-  "name": "angular-cookies",
-  "version": "1.7.8",
-  "description": "AngularJS module for cookies",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_from": "angular-cookies@1.7.x",
+  "_id": "angular-cookies@1.7.8",
+  "_inBundle": false,
+  "_integrity": "sha512-oS2X8XLYyLrwSBUKmcGkHxphwTtAEdi3eriSwMX/WUl5D6fRZ4EcBY4DaHN+tYDnzJ1i2lFa82/oq0kTKxZmyg==",
+  "_location": "/angular-cookies",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "angular-cookies@1.7.x",
+    "name": "angular-cookies",
+    "escapedName": "angular-cookies",
+    "rawSpec": "1.7.x",
+    "saveSpec": null,
+    "fetchSpec": "1.7.x"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/angular/angular.js.git"
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-cookies/-/angular-cookies-1.7.8.tgz",
+  "_shasum": "c674dcfd37168e3d7def6bed165a38f75f96dbc9",
+  "_spec": "angular-cookies@1.7.x",
+  "_where": "/Users/eightynine/Library/Mobile Documents/com~apple~CloudDocs/dev/tests/planning-poker",
+  "author": {
+    "name": "Angular Core Team",
+    "email": "angular-core+npm@google.com"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular.js/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "AngularJS module for cookies",
+  "homepage": "http://angularjs.org",
+  "jspm": {
+    "shim": {
+      "angular-cookies": {
+        "deps": [
+          "angular"
+        ]
+      }
+    }
   },
   "keywords": [
     "angular",
@@ -17,17 +49,15 @@
     "cookies",
     "client-side"
   ],
-  "author": "Angular Core Team <angular-core+npm@google.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/angular/angular.js/issues"
+  "main": "index.js",
+  "name": "angular-cookies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.js.git"
   },
-  "homepage": "http://angularjs.org",
-  "jspm": {
-    "shim": {
-      "angular-cookies": {
-        "deps": ["angular"]
-      }
-    }
-  }
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.7.8"
 }

@@ -8,6 +8,7 @@ var AuthService = [
         var promise = new Promise(function (resolve, reject) {
           user = $cookies.getObject('currentUser');
           if (user) {
+            self.broadcastLogin()
             $rootScope.currentUser = user
             $location.path('/dashboard');
             resolve(user);

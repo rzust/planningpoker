@@ -1,10 +1,11 @@
 var Session = [
   function () {
-    function Session(id, name, scale, created_by) {
+    function Session(id, name, scale, created_by, stories) {
       this.id = id;
       this.name = name;
       this.scale = scale;
       this.created_by = created_by;
+      this.stories = stories;
       this.state = 'Draft';
     }
     var possibleScales = [
@@ -22,29 +23,65 @@ var Session = [
 var SessionService = [
   '$localStorage',
   'Session',
-  function ($localStorage, Session) {
+  '$rootScope',
+  'wsSocket',
+  function ($localStorage, Session, $rootScope, wsSocket) {
     self = this
 
-    self.getAll = function () {
-      if (!$localStorage.sessions) {
-        $localStorage.sessions = [];
+    if (!$localStorage.sessions) {
+      $localStorage.sessions = [];
+    }
+
+    wsSocket.on("callSync", function (data) {
+      self.sendSync()
+    });
+
+    wsSocket.on("sync", function (data) {
+      if (data.updated_at) {
+        if (!$localStorage.sessions_updated_at || ($localStorage.sessions_updated_at < data.updated_at)) {
+          $localStorage.sessions_updated_at = data.updated_at;
+          $localStorage.sessions = data.sessions;
+          $rootScope.$broadcast('changed:localStorage', {});
+        }
       }
+    });
+
+    wsSocket.on("sessionCreated", function (data) {
+      if (data.session && (data.session.created_by != $rootScope.currentUser.name)) {
+        $localStorage.sessions.push(data.session);
+        if ($localStorage.sessions_updated_at < data.created_at) {
+          $localStorage.sessions_updated_at = data.created_at;
+        }
+        $rootScope.$broadcast('changed:localStorage', {});
+      }
+    });
+
+    callSync = function () {
+      wsSocket.send("callSync", { name: "planningPoker" });
+    };
+
+    self.sendSync = function () {
+      wsSocket.send("sync", { updated_at: $localStorage.sessions_updated_at, sessions: $localStorage.sessions });
+    };
+
+    self.getAll = function () {
       return $localStorage.sessions
     };
 
     self.add = function (name, scale, created_by) {
-      if (!$localStorage.sessions) {
-        $localStorage.sessions = [];
-      }
       id = $localStorage.sessions.length + 1;
       session = new Session(id, name, scale, created_by);
       $localStorage.sessions.push(session);
+      $localStorage.sessions_updated_at = Date.now();
+      wsSocket.send("sessionCreated", { session: session, created_at: $localStorage.sessions_updated_at });
       return session;
     };
 
     self.update = function (index, session) {
       $localStorage.sessions[index] = session
     }
+
+    callSync();
   }
 ]
 

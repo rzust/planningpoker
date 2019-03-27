@@ -9,6 +9,15 @@
           ng-model="$ctrl.session.scale"></select>
       </div>
     </div>
+    <div class="row">
+      <a href ng-click="$ctrl.addStory()">+ Add user story</a>
+      <div class="session-story" ng-repeat="story in $ctrl.session.stories">
+        <textarea>{{story.desc}}</textarea>
+        <a href ng-click="$ctrl.removeStory($index)">
+          <i class="material-icons">close</i>
+        </a>
+      </div>
+    </div>
     <div class="center">
       <button type="submit" class="btn">Start</button>
     </div>

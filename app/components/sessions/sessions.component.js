@@ -1,9 +1,16 @@
 var SessionsController = [
+  '$scope',
   'SessionService',
-  function (SessionService) {
+  function ($scope, SessionService) {
     var self = this;
 
-    self.sessions = SessionService.getAll()
+    $scope.$on('changed:localStorage', function () {
+      $scope.$apply(function () {
+        self.sessions = SessionService.getAll();
+      });
+    });
+
+    self.sessions = SessionService.getAll();
   }
 ]
 
