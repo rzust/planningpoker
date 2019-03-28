@@ -85,25 +85,36 @@ nav .brand-logo {
   max-width: 500px;
 }
 
-.participants-container {
+.icons-container {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.participants-container .participant {
-  width: 50px;
+.icons-container .icons {
+  min-width: 50px;
   align-items: center;
   justify-content: center;
 }
 
-.participants-container .participant .material-icons {
+.icons-container .icons .material-icons {
   display: block;
   font-size: 3rem;
-  background: efefef;
   background: #efefef;
   border-radius: 5px;
   padding: 2px;
+}
+
+.icons-container .icons .scale-icons {
+  display: block;
+  font-size: 2.5rem;
+  background: #efefef;
+  border-radius: 5px;
+  padding: 2px;
+  color: #444444;
+  height: 48px;
+  min-width: 48px;
+  line-height: 45px;
 }
 
 .session-story textarea {

@@ -9,7 +9,6 @@ var SessionEstimationController = [
     self.index = 0;
     self.estimations = [];
     self.setValue = function (value) {
-      console.log("value:", value, "index:", self.index);
       self.saveEstimation({ index: self.index, value: value });
       self.index++;
       if (self.index > self.session.stories.length - 1) {

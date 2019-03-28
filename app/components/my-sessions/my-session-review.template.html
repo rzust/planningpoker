@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="row">
+    <div class="input-field col s6">
+      <h2>{{$ctrl.session.name}}</h2>
+    </div>
+    <div class="input-field col s6">
+      <h2 class="text-right">{{$ctrl.session.scale.name}}</h2>
+    </div>
+  </div>
+
+  <div class="center" ng-show="$ctrl.session.finishState.includes('Complete')">
+    <hr>
+    <h1>All estimations made. Well done!</h1>
+    <p>All participants have estimated all user stories. You can run the session again and apply new estimations to the
+      current medians or discard the current estimations and start a new.</p>
+    <div class="center">
+      <a href ng-click="$ctrl.runAgain()">Run again</a> or
+      <a href ng-click="$ctrl.runAgainFresh()">Run again fresh</a>
+    </div>
+    <hr>
+  </div>
+
+  <div class="center" ng-hide="$ctrl.session.finishState.includes('Complete')">
+    <hr>
+    <div ng-show="$ctrl.session.finishState.includes('Info')">
+      <h1>Done. Some user stories need more information.</h1>
+      <p>User stories have been estimated, but some need more information. Add more information or discuss before
+        running again.</p>
+    </div>
+    <div ng-show="$ctrl.session.finishState.includes('Undoable')">
+      <h1>Done. Some user stories seem to be undoable.</h1>
+      <p>User stories have been estimated, but some seem undoable. Discussion is advised before running again.</p>
+    </div>
+    <div ng-show="$ctrl.session.finishState.includes('Disconnect')">
+      <h1>Some participants failed to estimate every user story.</h1>
+      <p>Seems that some participants weren’t able to estimate all user stories, probably due to lost connection. A
+        retried run
+        is advised.</p>
+    </div>
+    <div class="center">
+      <a href ng-click="$ctrl.runAgain()">Run again</a>
+    </div>
+    <hr>
+  </div>
+
+  <div class="row">
+    <div class="session-story" ng-repeat="story in $ctrl.session.stories | orderBy : 'overallInt' ">
+      <textarea disabled>{{story.description}}</textarea>
+      <div class="results">
+        <div class="icons-container" ng-show="story.overall">
+          <div class="icons">
+            <i class="material-icons" ng-show="story.overall == 'Info'">help</i>
+            <i class="material-icons" ng-show="story.overall == 'Undoable'">report_problem</i>
+            <span class="scale-icons" ng-hide="['Undoable','Info'].includes(story.overall)">{{story.overall}}</span>
+          </div>
+        </div>
+        <div class="preloader-wrapper small active" ng-hide="story.overall">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

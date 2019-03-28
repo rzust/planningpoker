@@ -17,7 +17,9 @@ angular.module('planningPoker').component('mySessionEstimation', {
   templateUrl: 'app/components/my-sessions/my-session-estimation.template.html',
   bindings: {
     state: '=',
-    session: '='
+    session: '=',
+    finishSession: '&',
+    abortSession: '&'
   },
   controller: MySessionEstimationController
 });

@@ -1,6 +1,7 @@
 <div ng-if="$ctrl.session.state == 'Draft' && !$ctrl.state">
   <div ng-if="$ctrl.moderator">
-    <my-session-waiting start-session="$ctrl.startSession()" participants="$ctrl.participants"></my-session-waiting>
+    <my-session-waiting start-session="$ctrl.startSession()" participants="$ctrl.session.participants">
+    </my-session-waiting>
   </div>
 
   <div ng-if="!$ctrl.moderator">
@@ -10,7 +11,8 @@
 
 <div class="container" ng-if="$ctrl.session.state == 'Live' && !$ctrl.state">
   <div ng-if="$ctrl.moderator">
-    <my-session-estimation session="$ctrl.session" state="$ctrl.state"></my-session-estimation>
+    <my-session-estimation session="$ctrl.session" state="$ctrl.state" finish-session="$ctrl.finishSession()"
+      abort-session="$ctrl.abortSession()"></my-session-estimation>
   </div>
 
   <div ng-if="!$ctrl.moderator">
@@ -20,9 +22,9 @@
   </div>
 </div>
 
-<div ng-if="$ctrl.state">
+<div class="container" ng-if="$ctrl.state || $ctrl.session.state == 'Finished'">
   <div ng-if="$ctrl.moderator">
-    <session-form session="$ctrl.session"></session-form>
+    <my-session-review session="$ctrl.session"></my-session-review>
   </div>
 
   <div class="center" ng-if="!$ctrl.moderator">

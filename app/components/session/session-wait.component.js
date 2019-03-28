@@ -1,15 +1,6 @@
 var SessionWaitController = [
-  'SessionService',
-  'Session',
-  '$rootScope',
-  '$location',
-  '$routeParams',
-  function (SessionService, Session, $rootScope, $location, $routeParams) {
+  function () {
     var self = this;
-
-    self.leave = function () {
-      self.leaveSession();
-    }
   }
 ]
 

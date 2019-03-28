@@ -20,14 +20,17 @@
     <hr>
   </div>
   <div class="row">
-    <!-- <a href ng-click="$ctrl.addStory()">+ Add user story</a> -->
     <div class="session-story" ng-repeat="story in $ctrl.session.stories">
       <textarea disabled>{{story.description}}</textarea>
-      <!-- <a href ng-click="$ctrl.removeStory($index)">
-        <i class="material-icons">close</i>
-      </a> -->
       <div class="results">
-        <div class="preloader-wrapper small active">
+        <div class="icons-container" ng-show="story.overall">
+          <div class="icons">
+            <i class="material-icons" ng-show="story.overall == 'Info'">help</i>
+            <i class="material-icons" ng-show="story.overall == 'Undoable'">report_problem</i>
+            <span class="scale-icons" ng-hide="['Undoable','Info'].includes(story.overall)">{{story.overall}}</span>
+          </div>
+        </div>
+        <div class="preloader-wrapper small active" ng-hide="story.overall">
           <div class="spinner-layer spinner-blue-only">
             <div class="circle-clipper left">
               <div class="circle"></div>

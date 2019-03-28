@@ -10,7 +10,7 @@ var SessionFormController = [
     self.session = { stories: [] };
 
     self.addStory = function () {
-      self.session.stories.push({ description: "", estimations: [], overall: null });
+      self.session.stories.push({ description: "", estimations: [], overall: null, overallInt: null });
     }
 
     self.removeStory = function (index) {
@@ -19,7 +19,7 @@ var SessionFormController = [
 
     self.saveSession = function () {
       session = SessionService.add(self.session.name, self.session.scale, $rootScope.currentUser.name, self.session.stories);
-      $location.path("/my_sessions");
+      $location.path("/sessions/" + session.id);
     }
   }
 ]
