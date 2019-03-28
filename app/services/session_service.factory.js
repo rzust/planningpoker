@@ -1,8 +1,12 @@
 var Session = [
   '$localStorage',
   function ($localStorage) {
-    function Session(id, name, scale, created_by, stories) {
-      this.id = id;
+    if (!$localStorage.sessions) {
+      $localStorage.sessions = [];
+    }
+
+    function Session(name, scale, created_by, stories) {
+      this.id = Session.count + 1;
       this.name = name;
       this.scale = scale;
       this.created_by = created_by;
@@ -10,9 +14,17 @@ var Session = [
       this.state = 'Draft';
     }
 
-    Session.prototype.getStory = function () {
-      return Date.now;
-    };
+    // Session.prototype = {
+    //   get fullName() {
+    //     return this.first + " " + this.last;
+    //   },
+
+    //   set fullName(name) {
+    //     var names = name.split(" ");
+    //     this.first = names[0];
+    //     this.last = names[1];
+    //   }
+    // };
 
     var possibleScales = [
       { name: "Fibonacci", values: [0, 1, 2, 3, 5, 8, 13, 20, 40, 100] },
@@ -26,21 +38,32 @@ var Session = [
       return $localStorage.sessions;
     };
 
+    Session.setAll = function (sessions) {
+      $localStorage.sessions = sessions;
+    };
+
+    Session.updatedAt = $localStorage.sessions_updated_at;
+
+    Session.setUpdatedAt = function (updatedAt) {
+      $localStorage.sessions_updated_at = updatedAt;
+    }
+
+    Session.add = function (session) {
+      $localStorage.sessions.push(session);
+    }
+
+    Session.count = $localStorage.sessions.length;
+
     return Session;
   }
 ]
 
 var SessionService = [
-  '$localStorage',
   'Session',
   '$rootScope',
   'wsSocket',
-  function ($localStorage, Session, $rootScope, wsSocket) {
+  function (Session, $rootScope, wsSocket) {
     self = this
-
-    if (!$localStorage.sessions) {
-      $localStorage.sessions = [];
-    }
 
     wsSocket.on("callSync", function (data) {
       self.sendSync()
@@ -48,9 +71,9 @@ var SessionService = [
 
     wsSocket.on("sync", function (data) {
       if (data.updated_at) {
-        if (!$localStorage.sessions_updated_at || ($localStorage.sessions_updated_at < data.updated_at)) {
-          $localStorage.sessions_updated_at = data.updated_at;
-          $localStorage.sessions = data.sessions;
+        if (!Session.updatedAt || (Session.updatedAt < data.updated_at)) {
+          Session.setUpdatedAt(data.updated_at);
+          Session.setAll(data.sessions);
           $rootScope.$broadcast('changed:localStorage', {});
         }
       }
@@ -58,9 +81,9 @@ var SessionService = [
 
     wsSocket.on("sessionCreated", function (data) {
       if (data.session && (data.session.created_by != $rootScope.currentUser.name)) {
-        $localStorage.sessions.push(data.session);
-        if ($localStorage.sessions_updated_at < data.created_at) {
-          $localStorage.sessions_updated_at = data.created_at;
+        Session.add(data.session);
+        if (Session.updatedAt < data.created_at) {
+          Session.setUpdatedAt(data.created_at);
         }
         $rootScope.$broadcast('changed:localStorage', {});
       }
@@ -71,7 +94,7 @@ var SessionService = [
     };
 
     self.sendSync = function () {
-      wsSocket.send("sync", { updated_at: $localStorage.sessions_updated_at, sessions: $localStorage.sessions });
+      wsSocket.send("sync", { updated_at: Session.updatedAt, sessions: Session.getAll() });
     };
 
     self.getAll = function () {
@@ -79,45 +102,26 @@ var SessionService = [
     };
 
     self.find = function (id) {
-      var session = $localStorage.sessions.find(function (element) {
+      var session = Session.getAll().find(function (element) {
         return element.id == id;
       });
       return session;
     };
 
     self.add = function (name, scale, created_by, stories) {
-      id = $localStorage.sessions.length + 1;
-      session = new Session(id, name, scale, created_by, stories);
-      $localStorage.sessions.push(session);
-      $localStorage.sessions_updated_at = Date.now();
-      wsSocket.send("sessionCreated", { session: session, created_at: $localStorage.sessions_updated_at });
+      session = new Session(name, scale, created_by, stories);
+      Session.add(session);
+      Session.setUpdatedAt(Date.now());
+      wsSocket.send("sessionCreated", { session: session, created_at: Session.updatedAt });
       return session;
     };
 
-    self.update = function (id, session) {
-      session = self.find(id);
-      index = $localStorage.sessions.indexOf(session);
-      $localStorage.sessions[index] = session;
-      self.sendSync();
-    };
-
-    // self.saveEstimation = function (id, index, value) {
+    // self.update = function (id, session) {
     //   session = self.find(id);
-    //   sessionIndex = $localStorage.sessions.indexOf(session);
-    //   $localStorage.sessions[sessionIndex].stories[index].estimations.push(value);
-    // }
-
-    // self.calculateOverall = function (id, index) {
-    //   session = self.find(id);
-    //   sessionIndex = $localStorage.sessions.indexOf(session);
-    //   var sum = 0;
-    //   estimations = $localStorage.sessions[sessionIndex].stories[index].estimations;
-    //   estimations.forEach(function (element) {
-    //     sum += element;
-    //   });
-    //   overall = Math.round(sum / estimations.length);
-    //   $localStorage.sessions[sessionIndex].stories[index].overall = $localStorage.sessions[sessionIndex].scale.values[overall];
-    // }
+    //   index = $localStorage.sessions.indexOf(session);
+    //   $localStorage.sessions[index] = session;
+    //   self.sendSync();
+    // };
 
     callSync();
   }
