@@ -1,0 +1,18 @@
+<div class="center">
+  <h1>My brand new session for estimating awesome features</h1>
+  <div ng-hide="$ctrl.participants.length > 0">
+    <p>waiting for participants to join...</p>
+  </div>
+  <div ng-show="$ctrl.participants.length > 0">
+    <div class="participants-container">
+      <div class="participant" ng-repeat="participant in $ctrl.participants">
+        <i class="material-icons">person</i>
+        <small>{{participant}}</small>
+      </div>
+    </div>
+
+    <div class="center m20"><a href ng-click="$ctrl.startSession()" class="btn">Go</a></div>
+    <small>You can wait for more participants or start. The session will become unavailable to join during the
+      process.</small>
+  </div>
+</div>

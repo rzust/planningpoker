@@ -2,24 +2,28 @@
   <form class="col s12" name="sessionForm" ng-submit="$ctrl.saveSession()">
     <div class="row">
       <div class="input-field col s6">
-        <input type="text" name="name" placeholder="session name" ng-model="$ctrl.session.name" />
+        <input type="text" name="name" placeholder="My session name..." ng-model="$ctrl.session.name" required />
       </div>
       <div class="input-field col s6">
         <select class="browser-default" ng-options="scale as scale.name for scale in $ctrl.scales track by scale.name"
-          ng-model="$ctrl.session.scale"></select>
+          ng-model="$ctrl.session.scale" required></select>
       </div>
     </div>
     <div class="row">
       <a href ng-click="$ctrl.addStory()">+ Add user story</a>
       <div class="session-story" ng-repeat="story in $ctrl.session.stories">
-        <textarea>{{story.desc}}</textarea>
+        <textarea ng-model="story.description" focus-input required></textarea>
         <a href ng-click="$ctrl.removeStory($index)">
           <i class="material-icons">close</i>
         </a>
       </div>
     </div>
-    <div class="center">
-      <button type="submit" class="btn">Start</button>
+    <div class="center" ng-hide="$ctrl.session.stories.length > 0">
+      You need to add some user stories before you can start this session.
+    </div>
+    <div class="center" ng-show="$ctrl.session.stories.length > 0">
+      <button type="submit" class="btn" ng-disabled="!sessionForm.$valid">Start</button>
+      <p>This will start your session and allow participants to join.</p>
     </div>
   </form>
 </div>

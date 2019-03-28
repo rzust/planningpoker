@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="row">
+    <div class="input-field col s6">
+      <h2>{{$ctrl.session.name}}</h2>
+    </div>
+    <div class="input-field col s6">
+      <h2 class="text-right">{{$ctrl.session.scale.name}}</h2>
+    </div>
+  </div>
+
+  <div class="center">
+    <hr>
+    <h1>Participants are still estimating...</h1>
+    <p>You can finish the session with the current results or abort it. Aborting will cause all estimations to be
+      discarted.</p>
+    <div class="center">
+      <a href ng-click="$ctrl.finishSession()">Finish</a> or
+      <a href ng-click="$ctrl.abortSession()">Abort</a>
+    </div>
+    <hr>
+  </div>
+  <div class="row">
+    <!-- <a href ng-click="$ctrl.addStory()">+ Add user story</a> -->
+    <div class="session-story" ng-repeat="story in $ctrl.session.stories">
+      <textarea disabled>{{story.description}}</textarea>
+      <!-- <a href ng-click="$ctrl.removeStory($index)">
+        <i class="material-icons">close</i>
+      </a> -->
+      <div class="results">
+        <div class="preloader-wrapper small active">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

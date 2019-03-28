@@ -1,0 +1,15 @@
+<div class="center">
+  <h1>Super cool estimation session</h1>
+  <small>moderated by {{$ctrl.session.created_by}}</small>
+  <hr>
+  <p>{{$ctrl.session.stories[$ctrl.index].description}}</p>
+
+  <div class="center m10">
+    <a href class="btn" ng-click="$ctrl.setValue($index)" ng-repeat="value in $ctrl.session.scale.values">{{value}}</a>
+  </div>
+
+  <div class="center m10">
+    <a href class="btn" ng-click="$ctrl.setValue(-1)">Needs info</a>
+    <a href class="btn" ng-click="$ctrl.setValue(-2)">Undoable</a>
+  </div>
+</div>

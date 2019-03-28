@@ -1,0 +1,43 @@
+<div ng-if="$ctrl.session.state == 'Draft' && !$ctrl.state">
+  <div ng-if="$ctrl.moderator">
+    <my-session-waiting start-session="$ctrl.startSession()" participants="$ctrl.participants"></my-session-waiting>
+  </div>
+
+  <div ng-if="!$ctrl.moderator">
+    <session-wait leave-session="$ctrl.leaveSession()" created-by="$ctrl.session.created_by"></session-wait>
+  </div>
+</div>
+
+<div class="container" ng-if="$ctrl.session.state == 'Live' && !$ctrl.state">
+  <div ng-if="$ctrl.moderator">
+    <my-session-estimation session="$ctrl.session" state="$ctrl.state"></my-session-estimation>
+  </div>
+
+  <div ng-if="!$ctrl.moderator">
+    <session-estimation session="$ctrl.session" state="$ctrl.state"
+      save-estimation="$ctrl.saveEstimation(index, value)">
+    </session-estimation>
+  </div>
+</div>
+
+<div ng-if="$ctrl.state">
+  <div ng-if="$ctrl.moderator">
+    <session-form session="$ctrl.session"></session-form>
+  </div>
+
+  <div class="center" ng-if="!$ctrl.moderator">
+    <div ng-if="$ctrl.state == 'Done'">
+      <h1>All done!</h1>
+      <p>Thanks for participating!</p>
+    </div>
+    <div ng-if="$ctrl.state == 'Finished'">
+      <h1>Looks like you're done!</h1>
+      <p>Seems the moderator decided to finish the estimation early. Thank for your input!</p>
+    </div>
+    <div ng-if="$ctrl.state == 'Aborted'">
+      <h1>Oh my!</h1>
+      <p>Looks like the moderator aborted the session.</p>
+    </div>
+    <a href="#!/dashboard">Back to Dashboard</a>
+  </div>
+</div>

@@ -6,7 +6,7 @@
         <tr
           ng-repeat="session in $ctrl.sessions | filter:{ created_by: $root.currentUser.name } as results track by session.name">
           <td>
-            <a href="#!/session/{{$index}}">{{session.name}}</a>
+            <a href="#!/sessions/{{session.id}}">{{session.name}}</a>
           </td>
           <td>{{session.scale.name}}</td>
           <td>{{session.state}}</td>

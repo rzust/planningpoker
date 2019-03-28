@@ -22,6 +22,10 @@ var wsSocket = [function () {
     console.log("WS Error:", err)
   };
 
+  connection.onclose = function (event) {
+    console.log("WS closed:", event);
+  };
+
   connection.onmessage = function (event) {
     var data = JSON.parse(event.data);
     for (var i = 0; i < listeners.length; i++) {

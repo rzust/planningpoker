@@ -1,5 +1,6 @@
 var Session = [
-  function () {
+  '$localStorage',
+  function ($localStorage) {
     function Session(id, name, scale, created_by, stories) {
       this.id = id;
       this.name = name;
@@ -8,6 +9,11 @@ var Session = [
       this.stories = stories;
       this.state = 'Draft';
     }
+
+    Session.prototype.getStory = function () {
+      return Date.now;
+    };
+
     var possibleScales = [
       { name: "Fibonacci", values: [0, 1, 2, 3, 5, 8, 13, 20, 40, 100] },
       { name: "T-Shirt", values: ['XS', 'S', 'M', 'L', 'XL', 'XXL'] },
@@ -15,6 +21,10 @@ var Session = [
     ];
 
     Session.possibleScales = angular.copy(possibleScales);
+
+    Session.getAll = function () {
+      return $localStorage.sessions;
+    };
 
     return Session;
   }
@@ -65,21 +75,49 @@ var SessionService = [
     };
 
     self.getAll = function () {
-      return $localStorage.sessions
+      return Session.getAll();
     };
 
-    self.add = function (name, scale, created_by) {
+    self.find = function (id) {
+      var session = $localStorage.sessions.find(function (element) {
+        return element.id == id;
+      });
+      return session;
+    };
+
+    self.add = function (name, scale, created_by, stories) {
       id = $localStorage.sessions.length + 1;
-      session = new Session(id, name, scale, created_by);
+      session = new Session(id, name, scale, created_by, stories);
       $localStorage.sessions.push(session);
       $localStorage.sessions_updated_at = Date.now();
       wsSocket.send("sessionCreated", { session: session, created_at: $localStorage.sessions_updated_at });
       return session;
     };
 
-    self.update = function (index, session) {
-      $localStorage.sessions[index] = session
-    }
+    self.update = function (id, session) {
+      session = self.find(id);
+      index = $localStorage.sessions.indexOf(session);
+      $localStorage.sessions[index] = session;
+      self.sendSync();
+    };
+
+    // self.saveEstimation = function (id, index, value) {
+    //   session = self.find(id);
+    //   sessionIndex = $localStorage.sessions.indexOf(session);
+    //   $localStorage.sessions[sessionIndex].stories[index].estimations.push(value);
+    // }
+
+    // self.calculateOverall = function (id, index) {
+    //   session = self.find(id);
+    //   sessionIndex = $localStorage.sessions.indexOf(session);
+    //   var sum = 0;
+    //   estimations = $localStorage.sessions[sessionIndex].stories[index].estimations;
+    //   estimations.forEach(function (element) {
+    //     sum += element;
+    //   });
+    //   overall = Math.round(sum / estimations.length);
+    //   $localStorage.sessions[sessionIndex].stories[index].overall = $localStorage.sessions[sessionIndex].scale.values[overall];
+    // }
 
     callSync();
   }

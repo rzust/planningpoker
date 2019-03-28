@@ -37,6 +37,14 @@ angular.module('planningPoker').
             }]
           }
         }).
+        when('/sessions/:id', {
+          template: '<session class="flex-container"></session>',
+          resolve: {
+            auth: ['AuthService', function (AuthService) {
+              return AuthService.validateUser();
+            }]
+          }
+        }).
         otherwise('/');
     }
   ]);
