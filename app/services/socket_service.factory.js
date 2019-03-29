@@ -15,6 +15,12 @@ var wsSocket = [function () {
     },
     on: function (channel, callback) {
       listeners.push({ channel: channel, callback: callback });
+    },
+    removeListener: function (channel) {
+      for (var i = 0; i < listeners.length; i++) {
+        if (listeners[i].channel == channel)
+          listeners.splice(i, 1);
+      }
     }
   };
 
@@ -41,7 +47,6 @@ var wsSocket = [function () {
     }
     stack = [];
   };
-  // connection.OPEN
 
   return wssocket;
 }];

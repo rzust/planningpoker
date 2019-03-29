@@ -9,21 +9,37 @@
           ng-model="$ctrl.session.scale" required></select>
       </div>
     </div>
+
+    <my-session-review run-again="$ctrl.runAgain(reset)" finish-state="$ctrl.session.finishState"
+      ng-if="$ctrl.session.id"></my-session-review>
+
     <div class="row">
       <a href ng-click="$ctrl.addStory()">+ Add user story</a>
-      <div class="session-story" ng-repeat="story in $ctrl.session.stories">
+      <div class="session-story" ng-repeat="story in $ctrl.session.stories | orderBy:'overallInt'">
         <textarea ng-model="story.description" focus-input required></textarea>
-        <a href ng-click="$ctrl.removeStory($index)">
+        <a href ng-click="$ctrl.removeStory($index)" ng-if="!$ctrl.session.id">
           <i class="material-icons">close</i>
         </a>
+        <div class="results">
+          <div class="icons-container" ng-show="story.overall">
+            <div class="icons">
+              <i class="material-icons" ng-show="story.overall == 'Info'">help</i>
+              <i class="material-icons" ng-show="story.overall == 'Undoable'">report_problem</i>
+              <span class="scale-icons" ng-hide="['Undoable','Info'].includes(story.overall)">{{story.overall}}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="center" ng-hide="$ctrl.session.stories.length > 0">
-      You need to add some user stories before you can start this session.
-    </div>
-    <div class="center" ng-show="$ctrl.session.stories.length > 0">
-      <button type="submit" class="btn" ng-disabled="!sessionForm.$valid">Start</button>
-      <p>This will start your session and allow participants to join.</p>
+
+    <div class="center" ng-if="!$ctrl.session.id">
+      <p ng-hide="$ctrl.session.stories.length > 0">
+        You need to add some user stories before you can start this session.
+      </p>
+      <div ng-show="$ctrl.session.stories.length > 0">
+        <button type="submit" class="btn" ng-disabled="!sessionForm.$valid">Start</button>
+        <p>This will start your session and allow participants to join.</p>
+      </div>
     </div>
   </form>
 </div>

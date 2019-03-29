@@ -5,6 +5,12 @@
   <p>{{$ctrl.session.stories[$ctrl.index].description}}</p>
 
   <div class="center m10">
+    <div class="progress">
+      <div class="determinate" style="width: {{($ctrl.seconds/30)*100}}%"></div>
+    </div>
+  </div>
+
+  <div class="center m10">
     <a href class="btn" ng-click="$ctrl.setValue($index)" ng-repeat="value in $ctrl.session.scale.values">{{value}}</a>
   </div>
 

@@ -6,7 +6,7 @@ var AuthService = [
     return {
       attempLogin: function () {
         var promise = new Promise(function (resolve, reject) {
-          user = $cookies.getObject('currentUser');
+          var user = $cookies.getObject('currentUser');
           if (user) {
             $rootScope.currentUser = user
             $location.path('/dashboard');
@@ -24,7 +24,7 @@ var AuthService = [
             resolve($rootScope.currentUser);
           }
           else {
-            user = $cookies.getObject('currentUser');
+            var user = $cookies.getObject('currentUser');
             if (user) {
               $rootScope.currentUser = user
               resolve(user);

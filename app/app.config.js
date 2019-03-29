@@ -16,7 +16,7 @@ angular.module('planningPoker').
         when('/dashboard', {
           template: '<sessions class="flex-container"></sessions>',
           resolve: {
-            auth: ['AuthService', '$location', function (AuthService, $location) {
+            auth: ['AuthService', function (AuthService) {
               return AuthService.validateUser();
             }]
           }

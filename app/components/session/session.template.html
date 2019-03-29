@@ -22,24 +22,24 @@
   </div>
 </div>
 
-<div class="container" ng-if="$ctrl.state || $ctrl.session.state == 'Finished'">
-  <div ng-if="$ctrl.moderator">
-    <my-session-review session="$ctrl.session"></my-session-review>
+<div class="container" ng-if="$ctrl.moderator && $ctrl.session.state == 'Finished'">
+  <session-form session="$ctrl.session" restart-session="$ctrl.restartSession(reset)"></session-form>
+</div>
+
+<div class="container center" ng-if="$ctrl.state && !$ctrl.moderator">
+  <div ng-if="$ctrl.state == 'Done'">
+    <h1>All done!</h1>
+    <p>Thanks for participating!</p>
   </div>
 
-  <div class="center" ng-if="!$ctrl.moderator">
-    <div ng-if="$ctrl.state == 'Done'">
-      <h1>All done!</h1>
-      <p>Thanks for participating!</p>
-    </div>
-    <div ng-if="$ctrl.state == 'Finished'">
-      <h1>Looks like you're done!</h1>
-      <p>Seems the moderator decided to finish the estimation early. Thank for your input!</p>
-    </div>
-    <div ng-if="$ctrl.state == 'Aborted'">
-      <h1>Oh my!</h1>
-      <p>Looks like the moderator aborted the session.</p>
-    </div>
-    <a href="#!/dashboard">Back to Dashboard</a>
+  <div ng-if="$ctrl.state == 'Finished'">
+    <h1>Looks like you're done!</h1>
+    <p>Seems the moderator decided to finish the estimation early. Thank for your input!</p>
   </div>
+
+  <div ng-if="$ctrl.state == 'Aborted'">
+    <h1>Oh my!</h1>
+    <p>Looks like the moderator aborted the session.</p>
+  </div>
+  <a href="#!/dashboard">Back to Dashboard</a>
 </div>

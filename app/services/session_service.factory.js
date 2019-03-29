@@ -9,8 +9,10 @@ var SessionService = [
       Session.setUpdatedAt(createdAt);
     };
 
-    wsSocket.on("callSync", function () {
-      self.sendSync()
+    wsSocket.on("callSync", function (data) {
+      if (data.name != $rootScope.currentUser.name) {
+        self.sendSync()
+      }
     });
 
     wsSocket.on("sync", function (data) {
@@ -34,7 +36,6 @@ var SessionService = [
     });
 
     self.sendSync = function () {
-      console.log("sync");
       wsSocket.send("sync", { updated_at: Session.getUpdatedAt(), sessions: Session.getAll() });
     };
 
@@ -43,14 +44,21 @@ var SessionService = [
     };
 
     self.find = function (id) {
-      var session = Session.getAll().find(function (element) {
-        return element.id == id;
-      });
-      return session;
+      self.callSync();
+      return Session.get(id);
+    };
+
+    self.update = function (session) {
+      var session = Session.get(session.id);
+      var sessions = Session.getAll();
+      var index = sessions.indexOf(session);
+      sessions[index] = session;
+      Session.setUpdatedAt(Date.now());
+      self.sendSync();
     };
 
     self.add = function (name, scale, created_by, stories) {
-      session = new Session(name, scale, created_by, stories);
+      var session = new Session(name, scale, created_by, stories);
       Session.add(session);
       wsSocket.send("sessionCreated", { session: session, created_at: Date.now() });
       return session;
@@ -74,13 +82,14 @@ var SessionService = [
       });
       if (!disconnect && !info && !undoable)
         session.finishState.push('Complete');
+      Session.setUpdatedAt(Date.now());
     };
 
-    callSync = function () {
-      wsSocket.send("callSync", { name: "planningPoker" });
+    self.callSync = function () {
+      wsSocket.send("callSync", $rootScope.currentUser);
     };
 
-    callSync();
+    self.callSync();
   }
 ]
 

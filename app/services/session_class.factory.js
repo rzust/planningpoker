@@ -27,6 +27,13 @@ var Session = [
 
     Session.possibleScales = angular.copy(possibleScales);
 
+    Session.get = function (id) {
+      var session = $localStorage.sessions.find(function (element) {
+        return element.id == id;
+      });
+      return session;
+    };
+
     Session.getAll = function () {
       return $localStorage.sessions;
     };

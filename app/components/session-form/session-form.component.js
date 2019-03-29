@@ -3,42 +3,51 @@ var SessionFormController = [
   'Session',
   '$rootScope',
   '$location',
-  function (SessionService, Session, $rootScope, $location) {
+  '$timeout',
+  function (SessionService, Session, $rootScope, $location, $timeout) {
     var self = this;
     self.scales = Session.possibleScales;
 
-    self.session = { stories: [] };
+    activate = function () {
+      self.getSession = function () {
+        if (typeof self.session != "undefined") {
+          return self.session;
+        }
+        return { stories: [] };
+      };
 
-    self.addStory = function () {
-      self.session.stories.push({ description: "", estimations: [], overall: null, overallInt: null });
-    }
+      self.session = self.getSession();
 
-    self.removeStory = function (index) {
-      self.session.stories.splice(index, 1);
-    }
+      self.addStory = function () {
+        self.session.stories.push({ description: "", estimations: [], previousEstimations: [], overall: null, overallInt: null });
+      }
 
-    self.saveSession = function () {
-      session = SessionService.add(self.session.name, self.session.scale, $rootScope.currentUser.name, self.session.stories);
-      $location.path("/sessions/" + session.id);
-    }
+      self.removeStory = function (index) {
+        self.session.stories.splice(index, 1);
+      }
+
+      self.saveSession = function () {
+        session = SessionService.add(self.session.name, self.session.scale, $rootScope.currentUser.name, self.session.stories);
+        $location.path("/sessions/" + session.id);
+      }
+
+      self.runAgain = function (reset) {
+        self.restartSession({ reset: reset });
+        $location.path("/sessions/" + self.session.id);
+      };
+    };
+
+    $timeout(function () {
+      activate();
+    });
   }
 ]
 
-angular.module('planningPoker').directive('focusInput', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'A',
-      link: function (scope, elem, attr) {
-        return $timeout(function () {
-          return elem[0].focus();
-        });
-      }
-    };
-  }
-]);
-
 angular.module('planningPoker').component('sessionForm', {
   templateUrl: 'app/components/session-form/session-form.template.html',
+  bindings: {
+    session: '<',
+    restartSession: '&'
+  },
   controller: SessionFormController
 });
