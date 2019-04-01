@@ -44,7 +44,7 @@ var SessionFormController = [
 ]
 
 angular.module('planningPoker').component('sessionForm', {
-  templateUrl: 'app/components/session-form/session-form.template.html',
+  templateUrl: 'app/components/session/session-form/session-form.template.html',
   bindings: {
     session: '<',
     restartSession: '&'

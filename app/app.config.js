@@ -14,7 +14,7 @@ angular.module('planningPoker').
           }
         }).
         when('/dashboard', {
-          template: '<sessions class="flex-container"></sessions>',
+          template: '<session-list my-sessions="false" class="flex-container"></session-list>',
           resolve: {
             auth: ['AuthService', function (AuthService) {
               return AuthService.validateUser();
@@ -22,7 +22,7 @@ angular.module('planningPoker').
           }
         }).
         when('/my_sessions', {
-          template: '<my-sessions class="flex-container"></my-sessions>',
+          template: '<session-list my-sessions="true" class="flex-container"></session-list>',
           resolve: {
             auth: ['AuthService', function (AuthService) {
               return AuthService.validateUser();

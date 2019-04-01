@@ -20,8 +20,8 @@
         <a href ng-click="$ctrl.removeStory($index)" ng-if="!$ctrl.session.id">
           <i class="material-icons">close</i>
         </a>
-        <div class="results">
-          <div class="icons-container" ng-show="story.overall">
+        <div class="results" ng-show="story.overall != null">
+          <div class="icons-container">
             <div class="icons">
               <i class="material-icons" ng-show="story.overall == 'Info'">help</i>
               <i class="material-icons" ng-show="story.overall == 'Undoable'">report_problem</i>

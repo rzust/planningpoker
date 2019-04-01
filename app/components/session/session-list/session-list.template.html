@@ -1,0 +1,21 @@
+<div class="container">
+  <div ng-show="$ctrl.sessions.length > 0">
+    <h1>{{$ctrl.titleSessions}}</h1>
+    <table>
+      <tbody>
+        <tr ng-repeat="session in $ctrl.sessions">
+          <td>
+            <a href="#!/sessions/{{session.id}}">{{session.name}}</a>
+          </td>
+          <td>{{session.scale.name}}</td>
+          <td ng-show="$root.currentUser.name == session.created_by">{{session.state}}</td>
+          <td ng-hide="$root.currentUser.name == session.created_by">moderated by {{session.created_by}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="center">
+    <h1 ng-show="$ctrl.sessions.length < 1">{{$ctrl.titleNoSessions}}</h1>
+    <a href="#!/my_sessions/create" class="btn mt20">Create session</a>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 var SessionEstimationController = [
+  '$scope',
   '$interval',
-  function ($interval) {
+  function ($scope, $interval) {
     var self = this;
     self.index = 0;
     self.estimations = [];
@@ -31,11 +32,15 @@ var SessionEstimationController = [
       }
     };
 
+    $scope.$on("$destroy", function () {
+      $interval.cancel(self.estimationInterval);
+    });
+
   }
 ]
 
 angular.module('planningPoker').component('sessionEstimation', {
-  templateUrl: 'app/components/session/session-estimation.template.html',
+  templateUrl: 'app/components/session/session-estimation/session-estimation.template.html',
   bindings: {
     session: '<',
     state: '=',

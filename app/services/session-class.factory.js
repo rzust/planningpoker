@@ -27,6 +27,19 @@ var Session = [
 
     Session.possibleScales = angular.copy(possibleScales);
 
+    Session.build = function (data) {
+      return new Session(
+        data.id,
+        data.name,
+        data.scale,
+        data.created_by,
+        data.stories,
+        data.state,
+        data.finishState,
+        data.participants,
+      );
+    };
+
     Session.get = function (id) {
       var session = $localStorage.sessions.find(function (element) {
         return element.id == id;

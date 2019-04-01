@@ -5,7 +5,7 @@ var SessionWaitController = [
 ]
 
 angular.module('planningPoker').component('sessionWait', {
-  templateUrl: 'app/components/session/session-wait.template.html',
+  templateUrl: 'app/components/session/session-wait/session-wait.template.html',
   bindings: {
     leaveSession: '&',
     createdBy: '<'

@@ -83,6 +83,7 @@ var SessionService = [
       if (!disconnect && !info && !undoable)
         session.finishState.push('Complete');
       Session.setUpdatedAt(Date.now());
+      return session;
     };
 
     self.callSync = function () {
